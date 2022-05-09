@@ -38,9 +38,6 @@ def init():
 
 init()
 
-print('git commit test')
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
