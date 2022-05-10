@@ -20,14 +20,14 @@ class Hex():
 
     def draw_hexes(self, screen, width):
         radius = self.radius
-        draw_hexagon(screen, (255,255,255), radius, self.position, width)
+        draw_hexagon(screen, (255,255,255), (255,0,0),radius, self.position, width)
 
-def draw_hexagon(surface, color, radius, position, width):
+def draw_hexagon(surface, color, color_inner,radius, position, width):
     n = 6
     r = radius
     x, y = position
+    pygame.draw.polygon(surface, color_inner, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)])
     pygame.draw.polygon(surface, color, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)], width)
-
 
 def init(questions):
 
@@ -54,7 +54,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-    screen.fill((0,0,0))
+    screen.fill((50,50,50))
     for hex in hexes:
         hex.draw_hexes(screen, 4)
     pygame.display.flip()
