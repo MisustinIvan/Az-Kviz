@@ -11,14 +11,11 @@ hexes = []
 questions_list = []
 
 class Hex():
-    def __init__(self, position, status, radius, question, type, answers, right_answer, number):
+    def __init__(self, position, status, radius, question, number):
         self.position = position
         self.status = status
         self.radius = radius
         self.question = question
-        self.type = type
-        self.answers = answers
-        self.right_answer = right_answer
         self.nuber = number
 
     def draw_hexes(self, screen, width):
@@ -44,7 +41,7 @@ def init(questions):
 
     for y in range(7):
         for x in range(y):
-            hex = Hex((((WIDTH/2)-(140 * x) + (70 * y)) - 70, 120 * y), 0, 70, str(questions[index]), 0, 0, 0, index)
+            hex = Hex((((WIDTH/2)-(140 * x) + (70 * y)) - 70, 120 * y), 0, 70, str(questions[index]), index)
             hexes.append(hex)
             index += 1
 
