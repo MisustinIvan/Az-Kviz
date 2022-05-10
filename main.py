@@ -21,6 +21,10 @@ class Hex():
         self.right_answer = right_answer
         self.nuber = number
 
+    def draw_hexes(self, screen, width):
+        radius = self.radius
+        draw_hexagon(screen, (255,255,255), radius, self.position, width)
+
 def draw_hexagon(surface, color, radius, position, width):
     n = 6
     r = radius
@@ -36,10 +40,14 @@ def init(questions):
     #initialize the list of hexes and assign them a position, default status and setup for the main loop
     #MAIN THING ----- SET THE QUESTIONS AND ANSWERS
 
-    for index in range(28):
-        hex = Hex((0,0), 0, 10, str(questions[index]), 10, 10, 10, index + 1)
-        print(hex.question)
-        hexes.append(hex)    # debug shit
+    index = 0
+
+    for y in range(7):
+        for x in range(y):
+            hex = Hex((((WIDTH/2)-(140 * x) + (70 * y)) - 70, 120 * y), 0, 70, str(questions[index]), 0, 0, 0, index)
+            hexes.append(hex)
+            index += 1
+
 
 init(questions_list)
 
@@ -50,7 +58,7 @@ while True:
             sys.exit()
 
     screen.fill((0,0,0))
-    draw_hexagon(screen, (255,255,255), 40, (WIDTH/2,HEIGHT/2), 4)
-    draw_hexagon(screen, (255,255,255), 40, ((WIDTH/2)+80,(HEIGHT/2)), 4)
+    for hex in hexes:
+        hex.draw_hexes(screen, 4)
     pygame.display.flip()
     clock.tick(60)
