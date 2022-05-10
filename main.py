@@ -4,11 +4,11 @@ screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 
 WIDTH, HEIGHT = screen.get_size()
 
-print(WIDTH, HEIGHT)
-
 clock = pygame.time.Clock()
 
 hexes = []
+
+questions_list = []
 
 class Hex():
     def __init__(self, position, status, radius, question, type, answers, right_answer, number):
@@ -27,16 +27,21 @@ def draw_hexagon(surface, color, radius, position, width):
     x, y = position
     pygame.draw.polygon(surface, color, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)], width)
 
-def init():
+
+def init(questions):
+
+    with open('questions.txt') as f:
+        questions = f.readlines()
+
     #initialize the list of hexes and assign them a position, default status and setup for the main loop
     #MAIN THING ----- SET THE QUESTIONS AND ANSWERS
 
     for index in range(28):
-       hex = Hex((0,0), 0, 10, 10, 10, 10, 10, index + 1)
-       hexes.append(hex)    # debug shit
-    print(len(hexes))       # debug shit
+        hex = Hex((0,0), 0, 10, str(questions[index]), 10, 10, 10, index + 1)
+        print(hex.question)
+        hexes.append(hex)    # debug shit
 
-init()
+init(questions_list)
 
 while True:
     for event in pygame.event.get():
