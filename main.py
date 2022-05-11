@@ -14,7 +14,12 @@ hexes = []
 
 questions_list = []
 
-font = pygame.font.Font('Ubuntu-Light.ttf', 40)
+with open('config.txt') as config_file:
+    config = config_file.readlines()
+
+font_file = str(config[0].replace('\n', ''))
+
+font = pygame.font.Font(font_file, 60)
 
 class Hex():
     def __init__(self, position, status, radius, question, number):
@@ -45,7 +50,7 @@ def draw_hexagon(surface, color, color_inner,radius, position, width):
 
 
 def print_question(screen, question, font):
-    text = font.render(question, False, (255,255,255), (200,200,200))
+    text = font.render(question, False, (100,100,100), (170,170,170))
     text_rect = text.get_rect()
     text_rect.center = ((WIDTH / 2), 1000)
     screen.blit(text, text_rect)
@@ -98,7 +103,7 @@ while True:
             hex.outline_color = (255,255,255)
         hex.draw_hexes(screen, 4)
         if hex.question_drawn == True:
-            print_question(screen, hex.question, font)
+            print_question(screen, hex.question.replace('\n', ''), font)
    #     hex.debug_rect(hex.rect)
     pygame.display.flip()
     clock.tick(60)
