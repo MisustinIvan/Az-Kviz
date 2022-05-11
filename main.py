@@ -1,10 +1,6 @@
 import pygame, sys, math
 
-pygame.init()
-
 screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-
-pygame.display.set_caption('Az Kvíz')
 
 WIDTH, HEIGHT = screen.get_size()
 
@@ -14,8 +10,6 @@ hexes = []
 
 questions_list = []
 
-font = pygame.font.Font('Ubuntu-Light.ttf', 40)
-
 class Hex():
     def __init__(self, position, status, radius, question, number):
         self.position = position
@@ -23,7 +17,6 @@ class Hex():
         self.radius = radius
         self.question = question
         self.nuber = number
-        self.question_drawn = False
         self.rect = pygame.Rect((self.position), ((self.radius * 1.6), (self.radius * 1.6)))
         self.rect.center = self.position
         self.outline_color = (255,255,255)
@@ -42,13 +35,6 @@ def draw_hexagon(surface, color, color_inner,radius, position, width):
     pygame.draw.polygon(surface, color_inner, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)])   # draws the background of the hexagon
     pygame.draw.polygon(surface, color, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)], width)  # draws the outline of the hexagon
 
-
-
-def print_question(screen, question, font):
-    text = font.render(question, False, (255,255,255), (200,200,200))
-    text_rect = text.get_rect()
-    text_rect.center = ((WIDTH / 2), 1000)
-    screen.blit(text, text_rect)
 
 
 def init(questions):
@@ -79,15 +65,9 @@ while True:
             mouse_pos = pygame.mouse.get_pos()
             for hex in hexes:
                 if hex.rect.collidepoint(mouse_pos):
-                    hex.question_drawn = True
                     print(hex.question)
                     print(hex.nuber)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                for hex in hexes:
-                    if hex.question_drawn == True:
-                        hex.question_drawn = False
 
     screen.fill((50,50,50))
     for hex in hexes:
@@ -97,8 +77,6 @@ while True:
         else:
             hex.outline_color = (255,255,255)
         hex.draw_hexes(screen, 4)
-        if hex.question_drawn == True:
-            print_question(screen, hex.question, font)
    #     hex.debug_rect(hex.rect)
     pygame.display.flip()
     clock.tick(60)
