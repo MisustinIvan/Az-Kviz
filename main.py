@@ -22,7 +22,7 @@ with open('config.txt') as config_file:
 
 font_file = str(config[0].replace('\n', ''))
 
-font = pygame.font.Font(font_file, 70)
+font = pygame.font.Font(font_file, 90)
 font_big = pygame.font.Font(font_file, 200)
 
 win = False
