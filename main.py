@@ -28,7 +28,7 @@ class Hex():
         self.radius = radius
         self.question = question
         self.nuber = number
-        self.question_drawn = False
+        self.selected = False
         self.rect = pygame.Rect((self.position), ((self.radius * 1.6), (self.radius * 1.6)))
         self.rect.center = self.position
         self.outline_color = (255,255,255)
@@ -84,15 +84,15 @@ while True:
             mouse_pos = pygame.mouse.get_pos()
             for hex in hexes:
                 if hex.rect.collidepoint(mouse_pos):
-                    hex.question_drawn = True
+                    hex.selected = True
                     print(hex.question)
                     print(hex.nuber)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 for hex in hexes:
-                    if hex.question_drawn == True:
-                        hex.question_drawn = False
+                    if hex.selected == True:
+                        hex.selected = False
 
     screen.fill((50,50,50))
     for hex in hexes:
@@ -102,7 +102,7 @@ while True:
         else:
             hex.outline_color = (255,255,255)
         hex.draw_hexes(screen, 4)
-        if hex.question_drawn == True:
+        if hex.selected == True:
             print_question(screen, hex.question.replace('\n', ''), font)
    #     hex.debug_rect(hex.rect)
     pygame.display.flip()
