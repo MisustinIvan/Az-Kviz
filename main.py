@@ -1,5 +1,8 @@
 import pygame, sys, math
 
+player1_name = input('Player 1 name > ')
+player2_name = input('Player 2 name > ')
+
 pygame.init()
 
 screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
@@ -19,7 +22,12 @@ with open('config.txt') as config_file:
 
 font_file = str(config[0].replace('\n', ''))
 
-font = pygame.font.Font(font_file, 60)
+font = pygame.font.Font(font_file, 70)
+font_big = pygame.font.Font(font_file, 200)
+
+win = False
+winner = 0
+
 
 class Hex():
     def __init__(self, position, status, radius, question, number):
@@ -31,11 +39,13 @@ class Hex():
         self.selected = False
         self.rect = pygame.Rect((self.position), ((self.radius * 1.6), (self.radius * 1.6)))
         self.rect.center = self.position
-        self.outline_color = (255,255,255)
+        self.outline_color = (150,150,150)
+        self.bg_color = (220,220,220)
+
 
     def draw_hexes(self, screen, width):
         radius = self.radius
-        draw_hexagon(screen, (self.outline_color), (255,0,0),radius, self.position, width)
+        draw_hexagon(screen, self.outline_color, self.bg_color,radius, self.position, width)
 
     def debug_rect(self, rect):
         pygame.draw.rect(screen, (0,255,0), self.rect, 4)
@@ -83,16 +93,37 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             for hex in hexes:
+                hex.selected = False
                 if hex.rect.collidepoint(mouse_pos):
+
                     hex.selected = True
                     print(hex.question)
                     print(hex.nuber)
 
+
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
+            if event.key == pygame.K_w:
                 for hex in hexes:
-                    if hex.selected == True:
-                        hex.selected = False
+                    if hex.selected:
+                        hex.bg_color = (0,0,0)
+
+            if event.key == pygame.K_e:
+                for hex in hexes:
+                    if hex.selected:
+                        hex.bg_color = (87,195,219)
+
+            if event.key == pygame.K_r:
+                for hex in hexes:
+                    if hex.selected:
+                        hex.bg_color = (250,156,4)
+
+            if event.key == pygame.K_n:
+                winner = 1
+                win = True
+
+            if event.key == pygame.K_m:
+                winner = 2
+                win = True
 
     screen.fill((50,50,50))
     for hex in hexes:
@@ -100,10 +131,13 @@ while True:
         if hex.rect.collidepoint(mouse_pos):
             hex.outline_color = (100,100,100)
         else:
-            hex.outline_color = (255,255,255)
+            hex.outline_color = (150,150,150)
         hex.draw_hexes(screen, 4)
+
+
         if hex.selected == True:
             print_question(screen, hex.question.replace('\n', ''), font)
+
    #     hex.debug_rect(hex.rect)
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(360)
