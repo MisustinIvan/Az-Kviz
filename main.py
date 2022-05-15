@@ -1,7 +1,7 @@
 import pygame, sys, math, random
 
-#player1_name = input('Player 1 name > ')
-#player2_name = input('Player 2 name > ')
+player1_name = input('Player 1 name > ')
+player2_name = input('Player 2 name > ')
 
 pygame.init()
 
@@ -111,6 +111,16 @@ def show_yn(screen, question, font):
    text_rect.center = (WIDTH/2,HEIGHT/2)
    screen.blit(text, text_rect)
 
+def draw_names(screen, name1, name2, font):
+    name1 = font.render(name1, False, (255,255,255))
+    name2 = font.render(name2, False, (255,255,255))
+    name1_rect = name1.get_rect()
+    name2_rect = name2.get_rect()
+    name1_rect.topleft = (0,0)
+    name2_rect.topright = (WIDTH,0)
+    screen.blit(name1, name1_rect)
+    screen.blit(name2, name2_rect)
+
 init(questions_list, letters_list, yn_questions_list)
 
 #print(len(hexes))
@@ -161,6 +171,7 @@ while True:
 
 
     screen.fill((220,220,220))
+    draw_names(screen, player1_name, player2_name, font)
     if yn_selected == False:
         for hex in hexes:
             mouse_pos = pygame.mouse.get_pos()
