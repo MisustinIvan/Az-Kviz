@@ -183,7 +183,3 @@ while True:
    #     hex.debug_rect(hex.rect)
     pygame.display.flip()
     clock.tick(360)
-
-
-
-# git commit test
