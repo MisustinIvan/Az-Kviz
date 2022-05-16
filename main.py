@@ -193,7 +193,7 @@ while True:
 
             if event.key == pygame.K_t:
                 for hex in hexes:
-                    hex.timer = 30
+                    hex.timer = 10
 
             if event.key == pygame.K_o:
                 for hex in hexes:
