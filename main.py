@@ -184,7 +184,7 @@ while True:
                     hex.timer = 30
 
 
-    screen.fill((220,220,220))
+    screen.fill((100,100,100))
     draw_names(screen, player1_name, player2_name, font)
     if yn_selected == False:
         for hex in hexes:
@@ -214,7 +214,7 @@ while True:
             show_yn(screen, random_question, font)
    #     hex.debug_rect(hex.rect)
 
-    print(timer)
+    #print(timer)
 
     timer_offset = 1200 - timer
 
