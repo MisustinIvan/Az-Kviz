@@ -2,7 +2,8 @@
 Repo for a school project az-kviz game
 
 # Requirements
-pygame python module - install by pip3 install pygame
+* Python 3.9
+* pygame python module - install by pip3 install pygame
 
 # Controls
 * Select the hexagon by clicking it with your mouse
