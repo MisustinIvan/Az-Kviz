@@ -30,6 +30,12 @@ font = pygame.font.Font(font_file, 90)
 
 font_big = pygame.font.Font(font_file, 100)
 
+timer = 1200
+timer_rect = pygame.Rect((0,0), ((WIDTH,20)))
+
+timer_offset = 0
+
+delta_time = 0
 
 yn_selected = False
 
@@ -112,8 +118,8 @@ def show_yn(screen, question, font):
    screen.blit(text, text_rect)
 
 def draw_names(screen, name1, name2, font):
-    name1 = font.render(name1, False, (255,255,255))
-    name2 = font.render(name2, False, (255,255,255))
+    name1 = font.render(name1, False, (255,255,255), (87,195,219))
+    name2 = font.render(name2, False, (255,255,255), (250,156,4))
     name1_rect = name1.get_rect()
     name2_rect = name2.get_rect()
     name1_rect.topleft = (0,0)
@@ -141,7 +147,6 @@ while True:
                     hex.selected = True
                    # print(hex.question)
                    # print(hex.nuber)           DEBUG
-
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
@@ -192,5 +197,16 @@ while True:
         if len(yn_questions_list) >= 1:
             show_yn(screen, random_question, font)
    #     hex.debug_rect(hex.rect)
+
+    print(timer)
+
+    timer_offset = 1200 - timer
+
+    timer -= delta_time
+    if timer <= 0:
+        pass
+
+    pygame.draw.rect(screen, (0,0,255), timer_rect)
+    timer_rect.topright = (0 + (timer_offset * (WIDTH/1200)),HEIGHT-10)
     pygame.display.flip()
-    clock.tick(360)
+    delta_time = clock.tick(60) / 1000
