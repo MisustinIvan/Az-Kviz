@@ -228,7 +228,7 @@ while True:
 
             if hex.selected == True and hex.timer >= 1:
                 hex.timer -= delta_time
-                hex_timer_rect = pygame.Rect((0,0), ((hex.timer * 10),20))
+                hex_timer_rect = pygame.Rect((0,0), ((hex.timer * 100),20))
                 hex_timer_rect.centerx = WIDTH/2
                 pygame.draw.rect(screen, (0,0,255), hex_timer_rect)
 
