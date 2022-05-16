@@ -41,6 +41,8 @@ yn_selected = False
 
 random_question = ''
 
+
+
 class Hex():
     def __init__(self, position, status, radius, question, number):
         self.position = position
@@ -53,6 +55,8 @@ class Hex():
         self.rect.center = self.position
         self.outline_color = (150,150,150)
         self.bg_color = (220,220,220)
+        self.timer = 0
+        self.timer_rect = pygame.Rect((0,0), (0,0))
 
 
     def draw_hexes(self, screen, width):
@@ -145,6 +149,7 @@ while True:
                 if hex.rect.collidepoint(mouse_pos):
 
                     hex.selected = True
+
                    # print(hex.question)
                    # print(hex.nuber)           DEBUG
 
@@ -174,6 +179,10 @@ while True:
                 if len(yn_questions_list) >= 1:
                     yn_questions_list.remove(random_question)
 
+            if event.key == pygame.K_t:
+                for hex in hexes:
+                    hex.timer = 30
+
 
     screen.fill((220,220,220))
     draw_names(screen, player1_name, player2_name, font)
@@ -192,6 +201,13 @@ while True:
 
             if hex.selected == True:
                 print_question(screen, hex.question.replace('\n', ''), font)
+
+            if hex.selected == True and hex.timer >= 1:
+                hex.timer -= delta_time
+                hex_timer_rect = pygame.Rect((0,0), ((hex.timer * 10),20))
+                hex_timer_rect.centerx = WIDTH/2
+                pygame.draw.rect(screen, (0,0,255), hex_timer_rect)
+
         draw_letters(screen, hexes, font_big, letters_list)
     else:
         if len(yn_questions_list) >= 1:
