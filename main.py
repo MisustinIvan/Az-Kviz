@@ -1,5 +1,7 @@
 import pygame, sys, math, random
 
+from load_images import *
+
 player1_name = input('Player 1 name > ')
 player2_name = input('Player 2 name > ')
 
@@ -39,6 +41,8 @@ delta_time = 0
 
 yn_selected = False
 
+
+
 random_question = ''
 
 
@@ -57,7 +61,8 @@ class Hex():
         self.bg_color = (220,220,220)
         self.timer = 0
         self.timer_rect = pygame.Rect((0,0), (0,0))
-
+        self.image = None
+        self.image_selected = False
 
     def draw_hexes(self, screen, width):
         radius = self.radius
@@ -84,6 +89,11 @@ def print_question(screen, question, font):
 
 def init(questions, letters, yn_questions):
 
+    images_list = load_images('/home/yyvan/Documents/coding/python/Az-Kviz/img/')
+    # print(images_list)
+
+
+
     with open('questions.txt') as f:
         for i in f.readlines():
             questions.append(i)
@@ -104,6 +114,7 @@ def init(questions, letters, yn_questions):
         for x in range(y):
             hex = Hex(((((WIDTH/2)+(140 * x) + (70 * y))) - ((y * 140) - 70), 120 * y), 0, 70, str(questions[index]), index + 1)
             hexes.append(hex)
+            hex.image = pygame.image.load('img/' + images_list[index])
             index += 1
 
 
@@ -149,6 +160,7 @@ while True:
                 if hex.rect.collidepoint(mouse_pos):
 
                     hex.selected = True
+                    hex.timer = 0
 
                    # print(hex.question)
                    # print(hex.nuber)           DEBUG
@@ -183,6 +195,18 @@ while True:
                 for hex in hexes:
                     hex.timer = 30
 
+            if event.key == pygame.K_o:
+                for hex in hexes:
+                    if hex.selected == True:
+                        hex.image_selected = True
+
+
+            if event.key == pygame.K_p:
+                for hex in hexes:
+                    if hex.selected == True and hex.image_selected == True:
+                        hex.image_selected = False
+
+                    
 
     screen.fill((100,100,100))
     draw_names(screen, player1_name, player2_name, font)
@@ -224,5 +248,8 @@ while True:
 
     pygame.draw.rect(screen, (0,0,255), timer_rect)
     timer_rect.topright = (0 + (timer_offset * (WIDTH/1200)),HEIGHT-10)
+    for hex in hexes:
+        if hex.selected == True and hex.image_selected == True:
+            screen.blit(hex.image, ((WIDTH/2) - 200, (HEIGHT/2) - 200) )
     pygame.display.flip()
     delta_time = clock.tick(60) / 1000
