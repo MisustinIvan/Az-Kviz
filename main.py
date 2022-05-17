@@ -89,7 +89,7 @@ def print_question(screen, question, font):
 
 def init(questions, letters, yn_questions):
 
-    images_list = load_images('/home/yyvan/Documents/coding/python/Az-Kviz/img/')
+    images_list = load_images('/home/yyvan/coding/python/Az-Kviz/img/')
     # print(images_list)
 
 
