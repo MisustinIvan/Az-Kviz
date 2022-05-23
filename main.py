@@ -5,6 +5,8 @@ from load_images import *
 player1_name = input('Player 1 name > ')
 player2_name = input('Player 2 name > ')
 
+image_list_dir = input("image folder directory: ")
+
 pygame.init()
 
 screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
@@ -89,7 +91,7 @@ def print_question(screen, question, font):
 
 def init(questions, letters, yn_questions):
 
-    images_list = load_images('/home/yyvan/coding/python/Az-Kviz/img/')
+    images_list = load_images(image_list_dir)
     # print(images_list)
 
 
