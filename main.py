@@ -6,7 +6,7 @@ player1_name = input('Player 1 name > ')
 player2_name = input('Player 2 name > ')
 
 defaut_dir = input("use default dir(y/n): ")
-if defaut_dir == "y":
+if defaut_dir == "n":
     image_list_dir = input("image folder directory: ")
 else:
     image_list_dir = "/home/yyvan/Documents/Coding/python/Az-Kviz/img/"
