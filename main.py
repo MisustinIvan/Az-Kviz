@@ -33,7 +33,7 @@ with open('config.txt') as config_file:
 
 font_file = str(config[0].replace('\n', ''))
 
-font = pygame.font.Font(font_file, 40)
+font = pygame.font.Font(font_file, 60)
 
 font_big = pygame.font.Font(font_file, 100)
 
@@ -82,6 +82,44 @@ def draw_hexagon(surface, color, color_inner,radius, position, width):
     x, y = position
     pygame.draw.polygon(surface, color_inner, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)])   # draws the background of the hexagon
     pygame.draw.polygon(surface, color, [(x + r * math.cos((2 * math.pi * i / n) + 11), y + r * math.sin((2 * math.pi * i / n) + 11)) for i in range(n)], width)  # draws the outline of the hexagon
+
+
+def renderTextCenteredAt(text, font, colour, x, y, screen, allowed_width):
+    # first, split the text into words
+    words = text.split()
+
+    # now, construct lines out of these words
+    lines = []
+    while len(words) > 0:
+        # get as many words as will fit within allowed_width
+        line_words = []
+        while len(words) > 0:
+            line_words.append(words.pop(0))
+            fw, fh = font.size(' '.join(line_words + words[:1]))
+            if fw > allowed_width:
+                break
+
+        # add a line consisting of those words
+        line = ' '.join(line_words)
+        lines.append(line)
+
+    # now we've split our text into lines that fit into the width, actually
+    # render them
+
+    # we'll render each line below the last, so we need to keep track of
+    # the culmative height of the lines we've rendered so far
+    y_offset = 0
+    for line in lines:
+        fw, fh = font.size(line)
+
+        # (tx, ty) is the top-left of the font surface
+        tx = x - fw / 2
+        ty = y + y_offset
+
+        font_surface = font.render(line, True, colour)
+        screen.blit(font_surface, (tx, ty))
+
+        y_offset += fh
 
 
 
@@ -229,7 +267,7 @@ while True:
             hex.draw_hexes(screen, 4)
 
             if hex.selected == True:
-                print_question(screen, hex.question.replace('\n', ''), font)
+                renderTextCenteredAt(hex.question.replace("\n", ""), font, (170,170,170), WIDTH/2, HEIGHT - 250, screen, WIDTH - 200)
 
             if hex.selected == True and hex.timer >= 1:
                 hex.timer -= delta_time
@@ -240,7 +278,7 @@ while True:
         draw_letters(screen, hexes, font_big, letters_list)
     else:
         if len(yn_questions_list) >= 1:
-            show_yn(screen, random_question, font)
+            renderTextCenteredAt(random_question, font, (170,170,170), WIDTH/2, HEIGHT/2, screen, WIDTH - 200)
    #     hex.debug_rect(hex.rect)
 
     #print(timer)
